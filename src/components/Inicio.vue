@@ -19,8 +19,8 @@
           Una defensa de los ideales de la Ilustración producto de la razón humana, que siempre están en pugna contra el pensamiento mágico, las creencias irracionales, la lealtad a la tribu y la deferencia hacia la autoridad política, moral o religiosa.
         </p>
       </div>
-      <img class="cerebro" id="cerebro-left" v-on:mouseout="HiddeContent('cerebro-left')" v-on:mouseover="ShowContent('cerebro-left')" src="@/assets/cerebro-left.png" width="400px">
-      <img class="cerebro" id="cerebro-right" v-on:mouseout="HiddeContent('cerebro-right')" v-on:mouseover="ShowContent('cerebro-right')" src="@/assets/cerebro-right.png" width="400px">
+      <img class="cerebro" id="cerebro-left" v-on:mouseout="HiddeContent('cerebro-left')" v-on:mouseover="ShowContent('cerebro-left')" src="@/assets/cerebro-left.png" width="300px">
+      <img class="cerebro" id="cerebro-right" v-on:mouseout="HiddeContent('cerebro-right')" v-on:mouseover="ShowContent('cerebro-right')" src="@/assets/cerebro-right.png" width="300px">
     </div>
   </div>
 </template>
@@ -73,11 +73,11 @@ export default {
 .text-main{
   margin: 30px 0px;
   text-align: left;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .title-main{
-  font-size: 40px;
+  font-size: 35px;
   color:#2F89FC;
 }
 

@@ -15,7 +15,27 @@ app.get('/*/', (req, res) => {
     res.sendFile(path.join(__dirname,'../dist/index.html'));
 })
 
-//Startint
+
+//Signup    
+app.post('/signup/user',(req,res)=>{
+    const {name, email, password, confirmpassword} = req.body;
+    console.log(name, email, password, confirmpassword);
+    res.json({
+        message: 'Registro de sesión correcto'
+    });
+});
+
+//Signin
+app.post('/signin/user',(req,res)=>{
+    const {email, password} = req.body;
+    console.log(email, password);
+    res.json({
+        message: 'Inicio de sesión correcto'
+    });
+});
+
+
+//Start
 app.listen(app.get('port'), () => {
     console.log("Stating server " + app.get('port'));
 })

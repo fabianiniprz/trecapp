@@ -8,6 +8,10 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '*',
+      component: () => import('./views/404Page.vue')
+    },
+    {
       path: '/',
       name: 'main',
       component: () => import('./views/Main.vue')
@@ -26,6 +30,16 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('./views/Dashboard.vue')
+    },
+    {
+      path: '/clock',
+      name: 'clock',
+      component: () => import('./views/Clock.vue')
+    },
+    {
+      path: '/daily',
+      name: 'daily',
+      component: () => import('./views/Daily.vue')
     }
   ]
 })

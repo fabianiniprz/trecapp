@@ -22,5 +22,6 @@
     "@vue/cli-service": "^3.8.0",
     "vue-template-compiler": "^2.6.10",
     "nodemon": "^1.19.1"
-  }
+  },
+  "proxy": "http://localhost:3000/"
 }

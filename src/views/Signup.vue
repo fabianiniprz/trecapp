@@ -1,43 +1,65 @@
 <template>
     <div>
-        <Nav />
-        <div class="container-signup">
-            <form class="form" action="">
-                <h3 class="title-form">Registrate</h3>
-                <input class="input-signup" type="text" placeholder="Nombre completo">
-                <input class="input-signup" type="email" placeholder="Correo electrónico">
-                <input class="input-signup" type="password" placeholder="Contraseña"> 
-                <input class="input-signup" type="password" placeholder="Confirmar contraseña">
-                <button class="button-form margin-button">Crear mi cuenta</button>
-                <hr />
-                <p class="text-form">¿Ya tienes cuenta?</p>
-                <router-link to="/signin"><button class="button-form">Iniciar sesión</button></router-link>
-            </form>
-        </div>
+        <b-container>
+            <b-row class="justify-content-center">
+                <b-col cols="10" sm="8" md="6" lg="4">
+
+                    <b-form class="container-forms" @submit="onSubmit">
+                        <h3 class="title-form">Registrate</h3>
+                        <input v-model="name" class="input-signup" type="text" placeholder="Nombre completo">
+                        <input v-model="email" class="input-signup" type="email" placeholder="Correo electrónico">
+                        <input v-model="password" class="input-signup" type="password" placeholder="Contraseña"> 
+                        <input v-model="confirmpassword" class="input-signup" type="password" placeholder="Confirmar contraseña">
+                        <b-button type="submit" block variant="primary" class="button-form">Crear mi cuenta</b-button>
+                        <hr />
+                        <p class="text-form">¿Ya tienes cuenta?</p>
+                        <router-link to="/signin"><b-button block variant="primary" class="button-form">Iniciar sesión</b-button></router-link>
+                    </b-form>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>    
 </template>
 
 <script>
-import Nav from '@/components/Nav.vue';
 
 export default {
-    components: {
-        Nav
+    data() {
+        return {
+            name: "",
+            email: "",
+            password: "",
+            confirmpassword: ""
+        }
+    },
+    methods: {
+        onSubmit() {
+            event.preventDefault();
+
+            fetch('/signup/user', {
+                method: 'POST',
+                headers:{
+                    Accept: "application/json, text/plain, */*",
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                    confirmpassword: this.confirmpassword
+                })
+            })
+            .then(res => res.json())
+            .then(res => console.log(res.message))
+            .catch(err => console.log(err))
+        }
     }
 }
 </script>
 
 <style>
-.container-signup{
-    width: 30%;
-    padding: 20px;
+.container-forms{
     margin: 40px auto;
-    border: #273036 1px solid; 
-}
-
-.form{
-    width: 90%;
-    margin: 10px auto;
 }
 
 .input-signup{
@@ -49,22 +71,14 @@ export default {
 }
 
 .button-form{
-    width: 100%;
     padding: 15px;
-    background: #2F89FC;
-    border: 0px; 
-    border-radius: 5px;
-    color: white;
     font-size: 15px;
+    margin: 20px 0px;
 }
 
 .text-form{ 
     text-align: center;
     font-size: 15px;
-}
-
-.margin-button{
-    margin: 20px 0px;
 }
 
 .title-form{

@@ -1,28 +1,17 @@
 <template>
     <footer class="footer">
-        <div class="container-info-footer">
-            <h3 class="text-info-footer">Accede para conocer más de la TREC y comenzar a practicarla.</h3>
-            <router-link to="/signup"><button class="button-footer">Registrarse</button></router-link>
-            <router-link to="/signin"><button class="button-footer">Iniciar sesión</button></router-link>
-        </div>
-        <div class="container-footer-menu">
-            <div class="footer-column">
-                <h3>Sobre nosotros</h3>
-                <ul class="ul-footer">
-                    <li>Investigación</li>
-                    <li>Equipo</li>
-                    <li>Contáctanos</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Términos y privacidad</h3>
-                <ul class="ul-footer">
-                    <li>Términos</li>
-                    <li>Privacidad</li>
-                </ul>
-            </div>
-        </div>
-        <p class="text-footer">@2019 - Neuro APP</p>
+        <b-container>
+            <b-row class="justify-content-center">
+                <b-col>
+                    <div>
+                        <h3 class="text-info-footer">Accede para conocer más de la TREC y comenzar a practicarla.</h3>
+                        <router-link to="/signup"><b-button variant="primary"  class="button-footer">Comenzar</b-button></router-link>
+                        <router-link to="/signin"><b-button variant="primary" class="button-footer">Acceder</b-button></router-link>
+                    </div>
+                    <p class="copyright">@2019 - Neuro APP</p>
+                </b-col>
+            </b-row>
+        </b-container>
     </footer>
 </template>
 
@@ -35,48 +24,24 @@ export default {
 <style>
 .footer{
     background: #273036;
-    padding: 20px;
+    padding: 40px 10px 10px 10px;
+    text-align: center;
 }
 
 .button-footer{
-    width: 20%;
-    padding: 15px;
-    background: #2F89FC;
-    border: 0px; 
-    border-radius: 5px;
-    color: white;
-    font-size: 15px;
+    font-size: 18px;   
     margin: 10px;
-}
-
-.container-info-footer{
-    text-align: center;
-    margin: 20px 0px;
+    width: 150px;
+    padding: 10px 0px;
 }
 
 .text-info-footer{
     color: white;
 }
 
-.text-footer{
+.copyright{
+    margin-top: 20px;
     text-align: end;
     color: white;
-}
-
-.container-footer-menu{
-    width: 80%;
-    margin: 0px auto;
-    display: flex;
-    justify-content: center;
-
-}
-
-.footer-column{
-    margin: 10px 40px;
-    color: white;
-}
-
-.ul-footer{
-    list-style: none;
 }
 </style>

@@ -1,41 +1,59 @@
 <template>
     <div>
         <Nav />
-        <div class="container-signup">
-            <form class="form" action="">
-                <h3 class="title-form">Inicia sesión</h3>
-                <input class="input-signup" type="email" placeholder="Correo electrónico">
-                <input class="input-signup" type="password" placeholder="Contraseña"> 
-                <button class="button-form margin-button">Iniciar sesión</button>
-                <hr />
-                <p class="text-form">¿No tienes cuenta?</p>
-                <router-link to="/signup"><button class="button-form">Registrarse</button></router-link>
-            </form>
-        </div>
+        <b-container>
+            <b-row class="justify-content-center">
+                <b-col cols="10" sm="8" md="6" lg="4">
+                   
+                    <b-form class="container-forms" @submit="onSubmit">
+                        <h3 class="title-form">Inicia sesión</h3>
+                        <input v-model="email" required class="input-signup" type="email" placeholder="Correo electrónico">
+                        <input v-model="password" required class="input-signup" type="password" placeholder="Contraseña"> 
+                        <b-button type="submit" block variant="primary" class="button-form">Iniciar sesión</b-button>
+                        <hr />
+                        <p class="text-form">¿No tienes cuenta?</p>
+                        <router-link to="/signup"><b-button block variant="primary" class="button-form">Registrarse</b-button></router-link>
+                    </b-form>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
 <script>
-import Nav from '@/components/Nav.vue';
-
 export default {
-    components: {
-        Nav
+    data() {
+        return {
+            email: "",
+            password: ""
+        }
+    },
+    methods: {
+        onSubmit(event) {
+            event.preventDefault();
+
+            fetch('/signin/user', {
+                method: 'POST',
+                headers:{
+                    Accept: "application/json, text/plain, */*",
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: this.email,
+                    password: this.password
+                })
+            })
+            .then(res => res.json())
+            .then(res => console.log(res.message))
+            .catch(err => console.log(err))
+        }
     }
 }
 </script>
 
 <style>
-.container-signup{
-    width: 30%;
-    padding: 20px;
+.container-forms{
     margin: 40px auto;
-    border: #273036 1px solid; 
-}
-
-.form{
-    width: 90%;
-    margin: 10px auto;
 }
 
 .input-signup{
@@ -47,13 +65,9 @@ export default {
 }
 
 .button-form{
-    width: 100%;
     padding: 15px;
-    background: #2F89FC;
-    border: 0px; 
-    border-radius: 5px;
-    color: white;
     font-size: 15px;
+    margin: 20px 0px;
 }
 
 .text-form{ 
@@ -61,9 +75,6 @@ export default {
     font-size: 15px;
 }
 
-.margin-button{
-    margin: 20px 0px;
-}
 
 .title-form{
     text-align: center;
