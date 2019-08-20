@@ -1,5 +1,6 @@
 <template>
     <div>
+        <b-alert show variant="danger">Danger Alert</b-alert>
         <b-container>
             <b-row class="justify-content-center">
                 <b-col cols="10" sm="8" md="6" lg="4">
@@ -36,22 +37,34 @@ export default {
         onSubmit() {
             event.preventDefault();
 
-            fetch('/signup/user', {
-                method: 'POST',
-                headers:{
-                    Accept: "application/json, text/plain, */*",
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                    confirmpassword: this.confirmpassword
+            if(this.name === "" || this.email === "" || this.password === "" || this.confirmpassword === ""){
+                
+                if(this.password !== this.confirmpassword){
+
+                }
+                else{
+
+                }
+            }
+            else{
+                fetch('/signup/user', {
+                    method: 'POST',
+                    headers:{
+                        Accept: "application/json, text/plain, */*",
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                        confirmpassword: this.confirmpassword
+                    })
                 })
-            })
-            .then(res => res.json())
-            .then(res => console.log(res.message))
-            .catch(err => console.log(err))
+                .then(res => res.json())
+                .then(res => console.log(res.message))
+                .catch(err => console.log(err))
+            }
+
         }
     }
 }

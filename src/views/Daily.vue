@@ -38,6 +38,8 @@
         <!--EMOCIONES-->
         <b-container v-if="level[0] === 1" class="text-center">
             <h3 class="title-emotions">¿Tu emoción es ...?</h3>
+            <hr />
+
             <b-row>
                 <b-col sm>
                     <div v-if="emotions !== 'Happy'" id="Happy" v-on:click="chooseEmotions('Happy')" class="background-emotions">
@@ -95,6 +97,8 @@
         <!--TEXTAREA-->
         <b-container v-if="level[1] === 1" class="text-center">
             <h3 class="title-emotions">¿Qué fue lo que te pasó hoy?</h3>
+            <hr />
+
             <b-row class="justify-content-sm-center">
                 <b-col sm="8">
                     <b-form-textarea
@@ -114,12 +118,31 @@
             <b-row class="justify-content-center">
                 <b-col sm="12" md="10" lg="8">
                     <h3 class="title-emotions">¿Qué pensaste?</h3>
-                    <b-button v-on:click="selectIrrational('irrational-1')" id="irrational-1" variant="outline-primary" class="irrational" block>¡YO DEBERÍA...! /¡ESA PERSONA DEBERÍA...! /¡EL MUNDO DEBERÍA...!</b-button>
-                    <b-button v-on:click="selectIrrational('irrational-2')" id="irrational-2" variant="outline-primary" class="irrational" block>¡ESTO QUE PASÓ ES TERRIBLE!</b-button>
-                    <b-button v-on:click="selectIrrational('irrational-3')" id="irrational-3" variant="outline-primary" class="irrational" block>¡NO PUEDO SOPORTAR ESTO!</b-button>
-                    <b-button v-on:click="selectIrrational('irrational-4')" id="irrational-4" variant="outline-primary" class="irrational" block>¡SOY DE LO PEOR! o ¡ESA PERSONA ES DE LO PEOR!</b-button>
-                    <b-button v-on:click="selectIrrational('irrational-5')" id="irrational-5" variant="outline-primary" class="irrational" block>¡SIEMPRE ES LO MISMO! o ¡ESTO NUNCA VA A CAMBIAR!</b-button>
-                    <b-button v-on:click="selectIrrational('irrational-6')" id="irrational-6" variant="outline-primary" class="irrational" block>No pensé nada de esto</b-button>
+                    <hr />
+
+                    <b-button v-if="irrational[0] === 0" v-on:click="selectIrrational('irrational-1')" id="irrational-1" variant="outline-primary" class="irrational" block>
+                        ¡YO DEBERÍA...! /¡ESA PERSONA DEBERÍA...! /¡EL MUNDO DEBERÍA...!</b-button>
+                    <b-button v-if="irrational[0] === 1" v-on:click="selectIrrational('irrational-1')" id="irrational-1" variant="outline-primary" class="irrational-choose" block>
+                        ¡YO DEBERÍA...! /¡ESA PERSONA DEBERÍA...! /¡EL MUNDO DEBERÍA...!</b-button>
+
+                    <b-button v-if="irrational[1] === 0" v-on:click="selectIrrational('irrational-2')" id="irrational-2" variant="outline-primary" class="irrational" block>
+                        ¡ESTO QUE PASÓ ES TERRIBLE!</b-button>
+                    <b-button v-if="irrational[1] === 1" v-on:click="selectIrrational('irrational-2')" id="irrational-2" variant="outline-primary" class="irrational-choose" block>
+                        ¡ESTO QUE PASÓ ES TERRIBLE!</b-button>
+
+                    <b-button v-if="irrational[2] === 0" v-on:click="selectIrrational('irrational-3')" id="irrational-3" variant="outline-primary" class="irrational" block>
+                        ¡NO PUEDO SOPORTAR ESTO!</b-button>
+                    <b-button v-if="irrational[2] === 1" v-on:click="selectIrrational('irrational-3')" id="irrational-3" variant="outline-primary" class="irrational-choose" block>
+                        ¡NO PUEDO SOPORTAR ESTO!</b-button>
+
+                    <b-button v-if="irrational[3] === 0" v-on:click="selectIrrational('irrational-4')" id="irrational-4" variant="outline-primary" class="irrational" block>
+                        ¡SOY DE LO PEOR! o ¡ESA PERSONA ES DE LO PEOR!</b-button>
+                    <b-button v-if="irrational[3] === 1" v-on:click="selectIrrational('irrational-4')" id="irrational-4" variant="outline-primary" class="irrational-choose" block>
+                        ¡SOY DE LO PEOR! o ¡ESA PERSONA ES DE LO PEOR!</b-button>
+
+                
+                    <!--<b-button v-on:click="selectIrrational('irrational-5')" id="irrational-5" variant="outline-primary" class="irrational" block>
+                        ¡SIEMPRE ES LO MISMO! o ¡ESTO NUNCA VA A CAMBIAR!</b-button>-->
                 </b-col>
             </b-row>
         </b-container>
@@ -127,7 +150,52 @@
         <b-container v-if="level[3] === 1 " class="text-center">
             <b-row class="justify-content-center">
                 <b-col>
-                    <h3 class="title-emotions">Explicar la irracionalidad del pensamiento</h3>
+                    <h3 class="title-emotions">Preguntas disputa</h3>
+                    <h4>Tomese el tiempo para responder cada pregunta antes de seguir y en caso de no poder, haga el ejercicio de respiracion e intente de nuevo.</h4>
+                    <hr />
+                    <b-col>
+                        <p v-if="irrational[0] === 1">¿Qué tan lógico es pensar que algo fuera de mi poder debería ser como yo quiera?</p>
+                        <p v-if="irrational[0] === 1">Pensar en que desearía que aquello fuera posible pero en caso de no serlo, entendería que está bien <br /> ¿me ayuda a calmar mi emocion?</p>
+                        <hr/>
+                    </b-col>
+                    <b-col>
+                        <p v-if="irrational[1] === 1">¿De verdad este problema es 100% terrible y no hay nada peor?</p>
+                        <p v-if="irrational[1] === 1">Pensar que puede haber cosas peores en el mundo y que posiblemente esté exagerando<br /> ¿me ayuda a calmar mi emocion?</p>
+                        <hr/>
+                    </b-col>
+                    <b-col> 
+                        <p v-if="irrational[2] === 1">¿Despues de este suceso no podre sobrevivir y por esto no puedo soportarlo?</p>
+                        <p v-if="irrational[2] === 1">Recordar que he pasado por momentos iguales o por lo que paso tiene solucion, <br /> ¿me ayuda a calmar mi emocion?</p>
+                        <hr/>
+                    </b-col>
+                    <b-col>
+                        <p v-if="irrational[3] === 1">¿Dónde está la prueba de que esa persona es de lo peor y no tiene ningun otra cualidad buena?</p>
+                        <p v-if="irrational[3] === 1"></p>                        
+                    </b-col>
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <b-container v-if="level[4] === 1 " class="text-center">
+            <b-row>
+                <b-col>
+
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <b-container v-if="level[5] === 1 " class="text-center">
+            <b-row>
+                <b-col>
+
+                </b-col>
+            </b-row>
+        </b-container>
+
+        <b-container v-if="level[6] === 1 " class="text-center">
+            <b-row>
+                <b-col>
+
                 </b-col>
             </b-row>
         </b-container>
@@ -146,8 +214,8 @@ export default {
     data() {
         return{
             emotions: "Ninguno",
-            level: [1,0,0,0],
-            irrational: [0,0,0,0,0,0],
+            level: [1,0,0,0,0,0,0],
+            irrational: [0,0,0,0,0],
             event: ""
         }
     },
@@ -170,7 +238,13 @@ export default {
                     this.showModal('alert-emotions');
                 }
                 else {
-                    this.level = [0,1,0,0];
+
+                    if(this.emotions === "Happy" || this.emotions === "Bored"){
+
+                    }
+                    else {
+                        this.level = [0,1,0,0];
+                    }
                 }
                 
             }
@@ -275,17 +349,6 @@ export default {
                     element.style = "background: white; color: #007bff;"
                 }
             }
-            else if(irrational === "irrational-6"){
-                
-                if(this.irrational[5] === 0){
-                    this.irrational[5] = 1;
-                    element.style = "background: #007bff; color: white;"
-                }
-                else{
-                    this.irrational[5] = 0;
-                    element.style = "background: white; color: #007bff;"
-                }
-            }
 
         },
         showModal(component) {
@@ -297,7 +360,7 @@ export default {
         resetDaily() {
             this.emotions = "Ninguno";
             this.level = [1,0,0,0];
-            this.irrational = [0,0,0,0,0,0];
+            this.irrational = [0,0,0,0,0];
             this.event = "";
         }
     }
@@ -384,5 +447,10 @@ export default {
     margin-top: 20px;
     font-size: 15px;
     margin-bottom: 0px;
+}
+
+.irrational-choose{
+    background: #007bff; 
+    color: white;
 }
 </style>

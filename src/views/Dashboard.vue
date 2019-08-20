@@ -3,8 +3,25 @@
         <b-container>
             <b-row  class="justify-content-center">
                 <b-col order="2" order-lg="1" md="10" lg="6" class="text-center">
+                    <!--
+                    <div class="background-home">
+                        <b-container>
+                            <b-row>
+                                <b-col>
+                                    <h3>Actividad semanal</h3>
+                                    <hr />
+                                    <div>
+                                        <h4>Nivel de irracionalidad!</h4>
+                                        <b-progress variant="warning" height="20px" v-bind:value="valueirrational" :max="70"></b-progress>
+                                    </div>
+                                </b-col>
+                            </b-row>
+                        </b-container>
+                    </div>
+                    -->
                     <div class="background-home">
                         <h3>Aprende lo básico</h3>
+                        <p>(Desactivado)</p>
                         <hr/>
                         <b-container>
                             <b-row class="text-left">
@@ -64,6 +81,11 @@
 
 export default {
     name: "dashboard",
+    data () {
+        return{
+            valueirrational: 50
+        }
+    },
     methods: {
         changeComponent(component) {
             if(component === 1){
@@ -74,7 +96,7 @@ export default {
             }
         },
         prueba() {
-            alert("Hola");
+            console.log("Hola");
         }
     }
 

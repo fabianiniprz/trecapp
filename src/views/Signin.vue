@@ -32,20 +32,25 @@ export default {
         onSubmit(event) {
             event.preventDefault();
 
-            fetch('/signin/user', {
-                method: 'POST',
-                headers:{
-                    Accept: "application/json, text/plain, */*",
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: this.email,
-                    password: this.password
+            if(this.email === "" || this.password === ""){
+                
+            }
+            else{
+                fetch('/signin/user', {
+                    method: 'POST',
+                    headers:{
+                        Accept: "application/json, text/plain, */*",
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: this.email,
+                        password: this.password
+                    })
                 })
-            })
-            .then(res => res.json())
-            .then(res => console.log(res.message))
-            .catch(err => console.log(err))
+                .then(res => res.json())
+                .then(res => console.log(res.message))
+                .catch(err => console.log(err))
+            }
         }
     }
 }
