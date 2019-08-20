@@ -1,5 +1,6 @@
 <template>
     <div class="dashboard">
+        <Nav />
         <b-container>
             <b-row  class="justify-content-center">
                 <b-col order="2" order-lg="1" md="10" lg="6" class="text-center">
@@ -78,9 +79,13 @@
 </template>
 
 <script>
+import Nav from '@/components/Navbar.vue';
 
 export default {
     name: "dashboard",
+    components: {
+        Nav
+    },
     data () {
         return{
             valueirrational: 50

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Nav />
         <b-container>
             <!--MODALS-->
             <b-modal ref="close-component" hide-header hide-footer>
@@ -61,6 +62,7 @@
 </template>
 
 <script>
+import Nav from '@/components/Navbar.vue';
 var timer;
 var timerAnimation;
 
@@ -74,6 +76,9 @@ export default {
             estadoBall: 0,
             marginBall: 200
         }
+    },
+    components: {
+        Nav
     },
     beforeDestroy () {
         this.min = 0;

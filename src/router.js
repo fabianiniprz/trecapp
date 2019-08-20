@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -29,17 +29,58 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: () => import('./views/Dashboard.vue')
+      component: () => import('./views/Dashboard.vue'),
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/clock',
       name: 'clock',
-      component: () => import('./views/Clock.vue')
+      component: () => import('./views/Clock.vue'),
+      meta: {
+        auth: true
+      }
     },
     {
       path: '/daily',
       name: 'daily',
-      component: () => import('./views/Daily.vue')
+      component: () => import('./views/Daily.vue'),
+      meta: {
+        auth: true
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+
+  var usuario = localStorage.getItem("Logged");
+  var autenticacion = to.matched.some(record => record.meta.auth);
+
+  if(!usuario && autenticacion){
+
+    next('signin');
+  }
+  else if (usuario && !autenticacion){
+
+    if(to.name == "dashboard"){
+      next('dashboard');
+    }
+    else if(to.name == "clock"){
+      next('clock');
+    }
+    else if(to.name == "daily"){
+      next('daily');
+    }
+    else {
+      next('dashboard');
+    }
+  }
+  else {
+    next();
+  }
+})
+
+
+export default router;

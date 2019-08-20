@@ -2,6 +2,11 @@
     <div>
         <Nav />
         <b-container>
+            <div>
+                <b-alert fade dismissible v-bind:show="alertData" @dismissed="alertData=false" variant="danger">
+                    Ingrese datos validos
+                </b-alert>
+            </div>
             <b-row class="justify-content-center">
                 <b-col cols="10" sm="8" md="6" lg="4">
                    
@@ -21,19 +26,36 @@
 </template>
 
 <script>
+import Nav from '@/components/Navbar.vue';
+
 export default {
+    components: {
+        Nav
+    },
     data() {
         return {
             email: "",
-            password: ""
+            password: "",
+            alertData: false
         }
     },
     methods: {
+        checkAuth(res) {
+            var message = res.message;
+            if(message === "Usuario no encontrado"){
+                this.alertData = true;
+            }
+            else {
+                //localStorage.setItem("Usuario", res.user);
+                localStorage.setItem("Logged", true);
+                this.$router.replace('/dashboard');
+            }
+        },
         onSubmit(event) {
             event.preventDefault();
 
             if(this.email === "" || this.password === ""){
-                
+                this.alertData = true;
             }
             else{
                 fetch('/signin/user', {
@@ -47,8 +69,7 @@ export default {
                         password: this.password
                     })
                 })
-                .then(res => res.json())
-                .then(res => console.log(res.message))
+                .then(res => this.checkAuth(res.json()))
                 .catch(err => console.log(err))
             }
         }

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Nav />
         <b-container class="background-errorpage">
             <b-row class="text-center">
                 <b-col>
@@ -12,8 +13,13 @@
     </div>
 </template>
 
-<script>export default {
+<script>
+import Nav from '@/components/Navbar.vue';
 
+export default {
+    components: {
+        Nav
+    }
 }
 </script>
 

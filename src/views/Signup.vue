@@ -1,16 +1,23 @@
 <template>
     <div>
-        <b-alert show variant="danger">Danger Alert</b-alert>
+        <Nav />
         <b-container>
+            <div>
+                <b-alert fade dismissible v-bind:show="alertData" @dismissed="alertData=false" variant="danger">
+                    Ingrese datos validos
+                </b-alert>
+                <b-alert fade dismissible v-bind:show="alertPassword" @dismissed="alertPassword=false" variant="danger">
+                    Las contraseñas no coinciden
+                </b-alert>
+            </div>
             <b-row class="justify-content-center">
                 <b-col cols="10" sm="8" md="6" lg="4">
-
                     <b-form class="container-forms" @submit="onSubmit">
                         <h3 class="title-form">Registrate</h3>
-                        <input v-model="name" class="input-signup" type="text" placeholder="Nombre completo">
-                        <input v-model="email" class="input-signup" type="email" placeholder="Correo electrónico">
-                        <input v-model="password" class="input-signup" type="password" placeholder="Contraseña"> 
-                        <input v-model="confirmpassword" class="input-signup" type="password" placeholder="Confirmar contraseña">
+                        <input v-model="name" required class="input-signup" type="text" placeholder="Nombre completo">
+                        <input v-model="email" required class="input-signup" type="email" placeholder="Correo electrónico">
+                        <input v-model="password" required class="input-signup" type="password" placeholder="Contraseña"> 
+                        <input v-model="confirmpassword" required class="input-signup" type="password" placeholder="Confirmar contraseña">
                         <b-button type="submit" block variant="primary" class="button-form">Crear mi cuenta</b-button>
                         <hr />
                         <p class="text-form">¿Ya tienes cuenta?</p>
@@ -23,28 +30,44 @@
 </template>
 
 <script>
+import Nav from '@/components/Navbar.vue';
 
 export default {
+    components: {
+        Nav
+    },
     data() {
         return {
             name: "",
             email: "",
             password: "",
-            confirmpassword: ""
+            confirmpassword: "",
+            alertData: false,
+            alertPassword: false
         }
     },
     methods: {
+        checkAuth(res) {
+            var message = res.message;
+            if(message === "Usuario ya registrado"){
+                this.alertData = true;
+            }
+            else {
+                //localStorage.setItem("Usuario", res.user);
+                localStorage.setItem("Logged", true);
+                this.$router.replace('/dashboard');
+            }
+
+        },
         onSubmit() {
             event.preventDefault();
 
             if(this.name === "" || this.email === "" || this.password === "" || this.confirmpassword === ""){
+                this.alertData = true;
                 
-                if(this.password !== this.confirmpassword){
-
-                }
-                else{
-
-                }
+            }
+            else if(this.password !== this.confirmpassword){
+                this.alertPassword = true;
             }
             else{
                 fetch('/signup/user', {
@@ -60,8 +83,7 @@ export default {
                         confirmpassword: this.confirmpassword
                     })
                 })
-                .then(res => res.json())
-                .then(res => console.log(res.message))
+                .then(res => this.checkAuth(res.json()))
                 .catch(err => console.log(err))
             }
 

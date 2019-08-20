@@ -7,8 +7,9 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <router-link class="text-nav" to="/signup">Comienza</router-link>
-          <router-link class="text-nav" to="signin">Acceder</router-link>
+          <router-link v-if="!auth" class="text-nav" to="/signup">Comienza</router-link>
+          <router-link v-if="!auth" class="text-nav" to="/signin">Acceder</router-link>
+          <b-navbar-item v-on:click="logout()" v-if="auth" class="text-nav">Salir</b-navbar-item>
         </b-navbar-nav>
       </b-collapse>
     </div>
@@ -17,7 +18,26 @@
 
 <script>
 export default {
-    
+    data() {
+      return {
+        auth: false
+      }
+    },
+    created() {
+
+      if(localStorage.getItem('Logged')){
+        this.auth = localStorage.getItem('Logged'); 
+      }
+    },
+    methods: {
+      logout() {
+        localStorage.removeItem("Logged");
+        this.$router.push('/');
+      },
+      prueba() {
+        console.log(this.auth)
+      }
+    }
 }
 </script>
 

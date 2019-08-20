@@ -20,9 +20,9 @@ mongoose.connect("mongodb+srv://NeuroApp:neurofilos@cluster0-9sz2p.mongodb.net/t
 .then(db => console.log('db conectada'))
 .catch(err => console.error(err));
 
-
 //Routes
-app.get('/*/', (req, res) => {
+app.get('/*/', (req, res, error) => {
+
     res.sendFile(path.join(__dirname,'../dist/index.html'));
 })
 

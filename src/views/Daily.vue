@@ -1,5 +1,6 @@
 <template>
     <div class="Daily">
+        <Nav />
         <b-container>
             <!--MODALS-->
             <b-modal ref="close-component" hide-header hide-footer>
@@ -210,14 +211,20 @@
 </template>
 
 <script>
+import Nav from '@/components/Navbar.vue';
+
 export default {
     data() {
         return{
+            
             emotions: "Ninguno",
             level: [1,0,0,0,0,0,0],
             irrational: [0,0,0,0,0],
             event: ""
         }
+    },
+    components: {
+        Nav
     },
     methods:{
         chooseEmotions(emocion) {
