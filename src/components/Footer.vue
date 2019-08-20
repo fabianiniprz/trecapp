@@ -1,23 +1,17 @@
 <template>
-    <footer>
-      <section id="section1">
-        <p  class="white">Accede para saber más de TREC y comenzar a practicar</p>
-        <button id="btn_registrarse_down">Registrarse</button>
-        <button id="btn_inciar_sesion_down">Iniciar sesion</button>
-      </section>
-
-      <section id="section2">
-        <label class="white">Sobre nosotros</label>
-        <label class="white">Investigación</label>
-        <label class="white">Equipo</label>
-        <label class="white">Contáctenos</label>
-      </section>
-
-      <section id="section3">
-        <label class="white">Términos y privacidad</label>
-        <label class="white">Terminos</label>
-        <label class="white">privacidad</label>
-      </section>
+    <footer class="footer">
+        <b-container>
+            <b-row class="justify-content-center">
+                <b-col>
+                    <div>
+                        <h3 class="text-info-footer">Accede para conocer más de la TREC y comenzar a practicarla.</h3>
+                        <router-link to="/signup"><b-button variant="primary"  class="button-footer">Comenzar</b-button></router-link>
+                        <router-link to="/signin"><b-button variant="primary" class="button-footer">Acceder</b-button></router-link>
+                    </div>
+                    <p class="copyright">@2019 - Neuro APP</p>
+                </b-col>
+            </b-row>
+        </b-container>
     </footer>
 </template>
 
@@ -28,5 +22,26 @@ export default {
 </script>
 
 <style>
+.footer{
+    background: #273036;
+    padding: 40px 10px 10px 10px;
+    text-align: center;
+}
 
+.button-footer{
+    font-size: 18px;   
+    margin: 10px;
+    width: 150px;
+    padding: 10px 0px;
+}
+
+.text-info-footer{
+    color: white;
+}
+
+.copyright{
+    margin-top: 20px;
+    text-align: end;
+    color: white;
+}
 </style>

@@ -3,6 +3,8 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const path = require("path");
+const mongoose = require('mongoose');
+const user = require('./models/Users');
 
 //Middlewares
 app.set('port', process.env.PORT || 3000);
@@ -10,35 +12,73 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname,'../dist/')));
 
+//Database conection
+mongoose.connect("mongodb+srv://NeuroApp:neurofilos@cluster0-9sz2p.mongodb.net/test?retryWrites=true&w=majority",
+{ 
+    useNewUrlParser: true 
+})
+.then(db => console.log('db conectada'))
+.catch(err => console.error(err));
+
+
 //Routes
 app.get('/*/', (req, res) => {
     res.sendFile(path.join(__dirname,'../dist/index.html'));
-});
+})
 
-//Signup
+//Signup    
+app.post('/signup/user', async(req,res)=>{
 
-app.get('/signup',(req,res)=>{
-    res.send('aquí va la vista del registro');
-});
-
-app.post('/signup/user',(req,res)=>{
     const {name, email, password, confirmpassword} = req.body;
-    res.send('Te has registrado correctamente');
+    const userFind = await user.find( {email: email} );
+    
+    if(name === " " || email === " " || password === " " ){
+        res.json({
+            message: 'Debes llenar todos los campos'
+        });
+        
+        return newUser.email;
+    }
+  
+    if(userFind[0]){
+        res.json({
+            message: 'Usuario ya registrado'
+        });
+    }
+    else {
+        const newUser = new user({name,email,password});
+        await newUser.save();
+        res.json({
+            message: 'Registro de sesión correct',
+            message: newUser.email
+        });
+    }    
 });
 
-//Login.
 
-app.get('/signin',(req,res)=>{
-    res.send('aquí va la vista de inicio de sesión');
-});
 
-app.post('/signin/user',(req,res)=>{
+//Signin
+app.post('/signin/user', async(req,res)=>{
+
     const {email, password} = req.body;
-    res.send('Inicio de sesión correcto');
+    const userFind = await user.find( {email: email, password: password} );
+
+    if(userFind[0]){
+        res.json({
+            message: 'Inicio de sesión correcto',
+            message: userFind[0].email
+        });
+        return userFind[0].email;
+    }
+    else {
+        res.json({
+            message: 'Usuario no encontrado'
+        });
+    }
 });
 
 
-//Startint
+//Start
 app.listen(app.get('port'), () => {
     console.log("Stating server " + app.get('port'));
-});
+})
