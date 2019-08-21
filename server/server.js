@@ -32,15 +32,20 @@ app.post('/signup/user', async(req,res)=>{
     const {name, email, password, confirmpassword} = req.body;
     const userFind = await user.find( {email: email} );
     
-    if(name === " " || email === " " || password === " " ){
+    if(name === " " || email === " " || password === " "){
         res.json({
             message: 'Debes llenar todos los campos'
         });
         
-        return newUser.email;
     }
-  
-    if(userFind[0]){
+    
+    else if(password !== confirmpassword){
+        res.json({
+            message: 'Las contraseñas deben coincidir '
+        });
+    }
+
+    else if(userFind[0]){
         res.json({
             message: 'Usuario ya registrado'
         });
@@ -49,8 +54,7 @@ app.post('/signup/user', async(req,res)=>{
         const newUser = new user({name,email,password});
         await newUser.save();
         res.json({
-            message: 'Registro de sesión correct',
-            message: newUser.email
+            message: 'Registro de sesión correcto'
         });
     }    
 });
@@ -65,10 +69,8 @@ app.post('/signin/user', async(req,res)=>{
 
     if(userFind[0]){
         res.json({
-            message: 'Inicio de sesión correcto',
-            message: userFind[0].email
+            message: 'Inicio de sesión correcto'
         });
-        return userFind[0].email;
     }
     else {
         res.json({
