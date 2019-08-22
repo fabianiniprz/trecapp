@@ -46,8 +46,6 @@ app.post('/signup/user', async(req,res)=>{
     }    
 });
 
-
-
 //Signin
 app.post('/signin/user', async(req,res)=>{
 
