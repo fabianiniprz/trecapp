@@ -5,7 +5,7 @@ const app = express();
 const path = require("path");
 const mongoose = require('mongoose');
 const user = require('./models/Users');
-
+const bcrypt = require('bcrypt-nodejs');
 //Middlewares
 app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
@@ -51,7 +51,12 @@ app.post('/signup/user', async(req,res)=>{
         });
     }
     else {
-        const newUser = new user({name,email,password});
+        
+        
+        req.body.password=bcrypt.hash(password, null, null, function(err, hash) {
+            // Store hash in your password DB.
+        });
+        const newUser = new user(req.body);
         await newUser.save();
         res.json({
             message: 'Registro de sesión correcto'
@@ -68,9 +73,16 @@ app.post('/signin/user', async(req,res)=>{
     const userFind = await user.find( {email: email, password: password} );
 
     if(userFind[0]){
+        if(bcrypt.compare(password, userFind[0].password, function(err, res) {})){
         res.json({
             message: 'Inicio de sesión correcto'
-        });
+            });
+        }
+        else{
+            res.json({
+                message: 'contraseña incorrecta'
+            })
+        }
     }
     else {
         res.json({
