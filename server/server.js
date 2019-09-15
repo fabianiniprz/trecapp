@@ -6,6 +6,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 const user = require('./models/Users');
 const bcrypt = require('bcrypt-nodejs');
+
 //Middlewares
 app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
@@ -29,8 +30,8 @@ app.get('/*/', (req, res) => {
 //Signup    
 app.post('/signup/user', async(req,res)=>{
 
-    const {name, email, password, confirmpassword} = req.body;
-    const userFind = await user.find( {email: email} );
+    var {name, email, password, confirmpassword} = req.body;
+    var userFind = await user.find( {email: email} );
     
     if(name === " " || email === " " || password === " "){
         res.json({
@@ -53,10 +54,7 @@ app.post('/signup/user', async(req,res)=>{
     else {
         
         
-        req.body.password=bcrypt.hash(password, null, null, function(err, hash) {
-            // Store hash in your password DB.
-        });
-        const newUser = new user(req.body);
+        var newUser = new user(req.body);
         await newUser.save();
         res.json({
             message: 'Registro de sesión correcto'
@@ -64,31 +62,51 @@ app.post('/signup/user', async(req,res)=>{
     }    
 });
 
-
-
 //Signin
 app.post('/signin/user', async(req,res)=>{
 
-    const {email, password} = req.body;
-    const userFind = await user.find( {email: email, password: password} );
+    var {email, password} = req.body;
+    var userFind = await user.find( {email: email, password: password} );
 
     if(userFind[0]){
-        if(bcrypt.compare(password, userFind[0].password, function(err, res) {})){
+      
         res.json({
             message: 'Inicio de sesión correcto'
             });
-        }
-        else{
-            res.json({
-                message: 'contraseña incorrecta'
-            })
-        }
     }
     else {
         res.json({
             message: 'Usuario no encontrado'
         });
     }
+});
+
+//Change pass
+
+app.post('/user/Change-pass', async (req,res)=>{
+
+    var {email, password, confirmpassword} = req.body;
+    var userFind = await user.find0ne( {email: email} );
+   
+    if(password != confirmpassword){
+        res.json({
+            message:'Las contraseñas deben coincidir'
+        })
+    }
+
+    else if (password == userFind.password){
+        res.json({
+            message:'La contraseña nueva no debe ser igual a la anterior'
+        });
+    }
+
+    else
+    {
+        userFind.password = password;
+        user.save(userFind);
+    }
+  
+  
 });
 
 
